@@ -133,6 +133,7 @@ function OnPlayerDeath()
 	StartScreenEffect('DeathFailOut', 0, false)
 end
 
+
 RegisterNetEvent('esx_ambulancejob:useItem')
 AddEventHandler('esx_ambulancejob:useItem', function(itemName)
 	ESX.UI.Menu.CloseAll()
@@ -394,6 +395,19 @@ AddEventHandler('esx_ambulancejob:revive', function()
 	StopScreenEffect('DeathFailOut')
 	DoScreenFadeIn(800)
 end)
+
+RegisterNetEvent('esx_ambulancejob:onBodyBag')
+AddEventHandler('esx_ambulancejob:onBodyBag', function()
+	if isDead then
+		ESX.ShowNotification(_U('player_being_bagged'))
+		Citizen.Wait(5000)
+		ESX.ShowNotification(_U('player_bagged_respawn'))
+
+		-- Trigger respawn with item removal
+		RemoveItemsAfterRPDeath()
+	end
+end)
+
 
 -- Load unloaded IPLs
 if Config.LoadIpl then

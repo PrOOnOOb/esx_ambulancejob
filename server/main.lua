@@ -85,6 +85,33 @@ AddEventHandler('esx_ambulancejob:putInVehicle', function(target)
 	end
 end)
 
+RegisterNetEvent('esx_ambulancejob:putInBodyBag')
+AddEventHandler('esx_ambulancejob:putInBodyBag', function(target)
+	local xPlayer = ESX.GetPlayerFromId(source)
+
+	if xPlayer.job.name == 'ambulance' then
+		local xTarget = ESX.GetPlayerFromId(target)
+
+		if xTarget then
+			if deadPlayers[target] then
+				xPlayer.showNotification(_U('bodybag_complete', xTarget.name))
+				TriggerClientEvent('esx_ambulancejob:onBodyBag', target)
+
+				-- Remove from dead players list
+				if deadPlayers[target] then
+					deadPlayers[target] = nil
+					TriggerClientEvent('esx_ambulancejob:setDeadPlayers', -1, deadPlayers)
+				end
+			else
+				xPlayer.showNotification(_U('player_not_unconscious'))
+			end
+		else
+			xPlayer.showNotification(_U('revive_fail_offline'))
+		end
+	end
+end)
+
+
 ESX.RegisterServerCallback('esx_ambulancejob:removeItemsAfterRPDeath', function(source, cb)
 	local xPlayer = ESX.GetPlayerFromId(source)
 
