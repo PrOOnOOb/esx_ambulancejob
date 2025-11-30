@@ -39,22 +39,35 @@ function OpenMobileAmbulanceActionsMenu()
 			{label = _U('ems_menu'), value = 'citizen_interaction'}
 	}}, function(data, menu)
 		if data.current.value == 'citizen_interaction' then
+			local menuElements = {
+				{label = _U('ems_menu_revive'), value = 'revive'},
+				{label = _U('ems_menu_small'), value = 'small'},
+				{label = _U('ems_menu_big'), value = 'big'},
+				{label = _U('ems_menu_putincar'), value = 'put_in_vehicle'},
+				{label = _U('ems_menu_search'), value = 'search'}
+			}
+
+			if Config.EnableBodyBag then
+				table.insert(menuElements, {label = _U('ems_menu_bodybag'), value = 'body_bag'})
+			end
+
 			ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'citizen_interaction', {
 				title    = _U('ems_menu_title'),
 				align    = 'top-left',
-				elements = {
-					{label = _U('ems_menu_revive'), value = 'revive'},
-					{label = _U('ems_menu_small'), value = 'small'},
-					{label = _U('ems_menu_big'), value = 'big'},
-					{label = _U('ems_menu_putincar'), value = 'put_in_vehicle'},
-					{label = _U('ems_menu_search'), value = 'search'}
-			}}, function(data, menu)
+				elements = menuElements
+			}, function(data, menu)
 				if isBusy then return end
 
 				local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
 
 				if data.current.value == 'search' then
 					TriggerServerEvent('esx_ambulancejob:svsearch')
+				elseif data.current.value == 'body_bag' then
+					if closestPlayer == -1 or closestDistance > 1.0 then
+						ESX.ShowNotification(_U('no_players'))
+					else
+						putPlayerInBodyBag(closestPlayer)
+					end
 				elseif closestPlayer == -1 or closestDistance > 1.0 then
 					ESX.ShowNotification(_U('no_players'))
 				else
@@ -159,6 +172,29 @@ function revivePlayer(closestPlayer)
 		end
 		isBusy = false
 	end, 'medikit')
+end
+
+function putPlayerInBodyBag(closestPlayer)
+	local closestPlayerPed = GetPlayerPed(closestPlayer)
+
+	if IsPedDeadOrDying(closestPlayerPed, 1) then
+		local playerPed = PlayerPedId()
+		isBusy = true
+
+		ESX.ShowNotification(_U('bodybag_in_progress'))
+
+		-- Animation: Medic working on body
+		TaskStartScenarioInPlace(playerPed, 'CODE_HUMAN_MEDIC_TEND_TO_DEAD', 0, true)
+		Citizen.Wait(5000)
+		ClearPedTasks(playerPed)
+
+		-- Trigger server event to put player in body bag
+		TriggerServerEvent('esx_ambulancejob:putInBodyBag', GetPlayerServerId(closestPlayer))
+
+		isBusy = false
+	else
+		ESX.ShowNotification(_U('player_not_unconscious'))
+	end
 end
 
 function FastTravel(coords, heading)

@@ -60,6 +60,7 @@ Locales['en'] = {
   ['ems_menu_putincar'] = 'put in Vehicle',
   ['ems_menu_small'] = 'heal small wounds',
   ['ems_menu_big'] = 'treat serious injuries',
+  ['ems_menu_bodybag'] = 'put in Body Bag',
   ['ems_menu_search'] = 'patient not found',
   -- Phone
   ['alert_ambulance'] = 'alert Ambulance',
@@ -72,6 +73,11 @@ Locales['en'] = {
   ['distress_send'] = 'press [~b~G~s~] to send distress signal',
   ['distress_sent'] = 'distress signal has been sent to available units!',
   ['combatlog_message'] = 'you have been force-respawned because you\'ve previously left the server when dead.',
+  ['bodybag_in_progress'] = 'putting player in body bag...',
+  ['bodybag_complete'] = 'you put ~y~%s~s~ in a body bag',
+  ['player_being_bagged'] = 'you are being put in a body bag by a medic...',
+  ['player_bagged_respawn'] = 'you have been declared dead and will now respawn.',
+  ['bodybag_only_on_headshot'] = 'this player can only be body bagged on headshot death',
   -- Revive
   ['revive_help'] = 'revive a player',
   -- Item

@@ -60,6 +60,8 @@ Locales['de'] = {
   ['ems_menu_putincar'] = 'In Fahrzeug stecken',
   ['ems_menu_small'] = 'Kleine Wunden behandeln',
   ['ems_menu_big'] = 'Ernsthafte Verletzungen behandeln',
+  ['ems_menu_bodybag'] = 'In Leichensack packen',
+  ['ems_menu_search'] = 'Spieler durchsuchen',
   -- Phone
   ['alert_ambulance'] = 'Rettungsdienst alarmieren',
   -- Death
@@ -71,6 +73,11 @@ Locales['de'] = {
   ['distress_send'] = 'Drücke [~b~G~s~] um ein Notsignal zu senden',
   ['distress_sent'] = 'Notsignal wurde an den Rettungsdienst übermittelt!',
   ['combatlog_message'] = 'Du wurdest respawnt, da du den Server verlassen hast, als du gestorben bist.',
+  ['bodybag_in_progress'] = 'Spieler wird in Leichensack gepackt...',
+  ['bodybag_complete'] = 'Du hast ~y~%s~s~ in einen Leichensack gepackt',
+  ['player_being_bagged'] = 'Du wirst von einem Sanitäter in einen Leichensack gepackt...',
+  ['player_bagged_respawn'] = 'Du wurdest für tot erklärt und wirst jetzt respawnt.',
+  ['bodybag_only_on_headshot'] = 'Dieser Spieler kann nur bei Kopfschuss in Leichensack gepackt werden',
   -- Revive
   ['revive_help'] = 'Belebe einen Spieler wieder',
   -- Item
